@@ -7,6 +7,7 @@ using Microsoft.Owin.Security.DataProtection;
 using Owin;
 using System;
 using BikeR.Web.Models;
+using BikeR.Web.Configuration;
 
 namespace BikeR.Web
 {
@@ -49,7 +50,13 @@ namespace BikeR.Web
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication();
+            AuthApiKeySection config =
+                   (AuthApiKeySection)System.Configuration.ConfigurationManager.GetSection(
+                   "AuthApiKeyGroup/AuthApiKey");
+
+            app.UseGoogleAuthentication(
+                 clientId: config.GoogleApi.ClientId,
+                 clientSecret: config.GoogleApi.ClientSecret);
         }
     }
 }
