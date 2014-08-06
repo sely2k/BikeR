@@ -22,5 +22,17 @@ namespace BikeR.Web.Configuration
         }
 
 
+        [ConfigurationProperty("FacebookApi")]
+        public FacebookApiKey FacebookApi
+        {
+            get
+            {
+                return (FacebookApiKey)this["FacebookApi"];
+            }
+            set
+            { this["FacebookApi"] = value; }
+        }
+
+
     }
 }
