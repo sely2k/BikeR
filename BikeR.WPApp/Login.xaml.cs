@@ -116,11 +116,26 @@ namespace BikeR.WPApp
 
         private async void btnFacebookLogin_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            await AuthenticateAsync();
+            await AuthenticateAsync(MobileServiceAuthenticationProvider.Facebook);
             Frame.Navigate(typeof(ItemPage));
         }
 
-        private async System.Threading.Tasks.Task AuthenticateAsync()
+
+        private async void btnGoogleLogin_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            await AuthenticateAsync(MobileServiceAuthenticationProvider.Google);
+            Frame.Navigate(typeof(ItemPage));
+        }
+
+
+        private async  void btnTwitterLogin_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            await AuthenticateAsync(MobileServiceAuthenticationProvider.Twitter);
+            Frame.Navigate(typeof(ItemPage));
+        }
+
+
+        private async System.Threading.Tasks.Task AuthenticateAsync(MobileServiceAuthenticationProvider authProvider)
         {
 
             string message = "";
@@ -132,7 +147,7 @@ namespace BikeR.WPApp
                 try
                 {
                     user = await App.proxy
-                        .LoginAsync(MobileServiceAuthenticationProvider.Google);
+                        .LoginAsync(authProvider);
                     message =
                         string.Format("You are now logged in - {0}", user.UserId);
                 }
@@ -148,9 +163,12 @@ namespace BikeR.WPApp
             
         }
 
-        private void Button_Tapped(object sender, TappedRoutedEventArgs e)
-        {
 
-        }
+
+
+
+
     }
+
+
 }

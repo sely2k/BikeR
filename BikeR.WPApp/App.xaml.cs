@@ -30,7 +30,7 @@ namespace BikeR.WPApp
     public sealed partial class App : Application
     {
 
-        public static MobileServiceClient proxy = new MobileServiceClient("https://bikermobilews.azure-mobile.net/");
+        public static MobileServiceClient proxy = new MobileServiceClient("https://bikermobilews.azure-mobile.net/", "lsFLaUlAkVwopmYxywkaRwRUhTRTGF59");
 
 
         private TransitionCollection transitions;

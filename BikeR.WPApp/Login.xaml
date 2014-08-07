@@ -31,7 +31,9 @@
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
             <StackPanel Margin="0">
                 <Button x:Name="btnFacebookLogin" Content="Facebook" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Tapped="btnFacebookLogin_Tapped"/>
-                <Button Content="Button" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Tapped="Button_Tapped"/>
+                <Button x:Name="btnGoogle" Content="Google" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Tapped="btnGoogleLogin_Tapped" />
+                <Button x:Name="btnTwitter" Content="Google" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Tapped="btnTwitterLogin_Tapped" />
+
             </StackPanel>
 
         </Grid>
