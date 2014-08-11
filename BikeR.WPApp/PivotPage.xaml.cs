@@ -1,5 +1,6 @@
 ﻿using BikeR.WPApp.Common;
 using BikeR.WPApp.Data;
+using BikeR.WPApp.DataModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -164,5 +165,26 @@ namespace BikeR.WPApp
         }
 
         #endregion
+
+        private async void Button_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+
+            NfcField field = new NfcField() { nfctagid = "" };
+            try
+            {
+
+                await App.proxy.GetTable<NfcField>().InsertAsync(field);
+            }
+            catch(Exception ex)
+            {
+                
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

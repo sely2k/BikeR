@@ -117,21 +117,21 @@ namespace BikeR.WPApp
         private async void btnFacebookLogin_Tapped(object sender, TappedRoutedEventArgs e)
         {
             await AuthenticateAsync(MobileServiceAuthenticationProvider.Facebook);
-            Frame.Navigate(typeof(ItemPage));
+            Frame.Navigate(typeof(PivotPage));
         }
 
 
         private async void btnGoogleLogin_Tapped(object sender, TappedRoutedEventArgs e)
         {
             await AuthenticateAsync(MobileServiceAuthenticationProvider.Google);
-            Frame.Navigate(typeof(ItemPage));
+            Frame.Navigate(typeof(PivotPage));
         }
 
 
         private async  void btnTwitterLogin_Tapped(object sender, TappedRoutedEventArgs e)
         {
             await AuthenticateAsync(MobileServiceAuthenticationProvider.Twitter);
-            Frame.Navigate(typeof(ItemPage));
+            Frame.Navigate(typeof(PivotPage));
         }
 
 
@@ -160,6 +160,12 @@ namespace BikeR.WPApp
                 var dialog = new MessageDialog(message);
                 dialog.Commands.Add(new UICommand("OK"));
                 await dialog.ShowAsync();
+  
+
+
+
+
+
             
         }
 
