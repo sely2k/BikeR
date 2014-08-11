@@ -1,6 +1,7 @@
 ﻿using BikeR.WPApp.Common;
 using BikeR.WPApp.Data;
 using BikeR.WPApp.DataModel;
+using Microsoft.WindowsAzure.MobileServices;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,6 +21,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+
 // The Pivot Application template is documented at http://go.microsoft.com/fwlink/?LinkID=391641
 
 namespace BikeR.WPApp
@@ -33,9 +35,40 @@ namespace BikeR.WPApp
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
         private readonly ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView("Resources");
 
+
+
+        private IMobileServiceTable<NfcField> NfcTable = App.proxy.GetTable<NfcField>();
+        #region DPs
+
+
+        public MobileServiceCollection<NfcField, NfcField> NfcItems
+        {
+            get { return (MobileServiceCollection<NfcField, NfcField>)GetValue(NfcItemsProperty); }
+            set { SetValue(NfcItemsProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty NfcItemsProperty =
+            DependencyProperty.Register
+            (
+                "NfcItems", 
+                typeof(MobileServiceCollection<NfcField, NfcField>), 
+                typeof(PivotPage), 
+                new PropertyMetadata
+                (
+                    null
+                )
+            );
+
+        
+        #endregion
+
         public PivotPage()
         {
             this.InitializeComponent();
+
+
+            NfcListView.DataContext = NfcItems;
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
 
@@ -175,11 +208,34 @@ namespace BikeR.WPApp
             {
 
                 await App.proxy.GetTable<NfcField>().InsertAsync(field);
+
+
+
             }
             catch(Exception ex)
             {
                 
             }
+
+            RefreshNfcItems();
+
+        }
+
+
+
+        private async void RefreshNfcItems()
+        {
+            // This code refreshes the entries in the list view be querying the TodoItems table.
+            // The query excludes completed TodoItems
+            try
+            {
+                NfcItems = await NfcTable.ToCollectionAsync();
+            }
+            catch (MobileServiceInvalidOperationException e)
+            {
+                
+            }
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
