@@ -10,7 +10,7 @@
 
     <Grid x:Name="LayoutRoot">
 
-        <Grid.ChildrenTransitions>
+        <!--<Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>
             </TransitionCollection>
@@ -19,23 +19,35 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        </Grid.RowDefinitions>-->
 
         <!-- Title Panel -->
-        <StackPanel Grid.Row="0" Margin="19,0,0,0">
+        <!--<StackPanel Grid.Row="0" Margin="19,0,0,0">
             <TextBlock Text="MY APPLICATION" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
             <TextBlock Text="page title" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
-        </StackPanel>
+        </StackPanel>-->
 
         <!--TODO: Content should be placed within the following grid-->
-        <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
-            <StackPanel Margin="0">
-                <Button x:Name="btnFacebookLogin" Content="Facebook" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Tapped="btnFacebookLogin_Tapped"/>
-                <Button x:Name="btnGoogle" Content="Google" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Tapped="btnGoogleLogin_Tapped" />
-                <Button x:Name="btnTwitter" Content="Google" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Tapped="btnTwitterLogin_Tapped" />
+        <!--<Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">-->
+            <StackPanel Margin="0" VerticalAlignment="Center">
+                <Button x:Name="btnFacebookLogin" Content="Facebook" HorizontalAlignment="Stretch" VerticalAlignment="Center" Tapped="btnFacebookLogin_Tapped" BorderBrush="{x:Null}" Foreground="{x:Null}" Height="90">
+                <Button.Background>
+                    <ImageBrush Stretch="UniformToFill" ImageSource="Assets/LoginButton/facebookLogin.png"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="btnGoogle" Content="Google" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Tapped="btnGoogleLogin_Tapped" BorderBrush="{x:Null}" Foreground="{x:Null}" Height="90" >
+                <Button.Background>
+                    <ImageBrush Stretch="UniformToFill" ImageSource="Assets/LoginButton/googleLogin.png"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="btnTwitter" Content="Twitter" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Tapped="btnTwitterLogin_Tapped" Height="90" BorderBrush="{x:Null}" Foreground="{x:Null}" >
+                <Button.Background>
+                    <ImageBrush Stretch="UniformToFill" ImageSource="Assets/LoginButton/twitterLogin.png"/>
+                </Button.Background>
+            </Button>
 
-            </StackPanel>
+        </StackPanel>
 
-        </Grid>
+        <!--</Grid>-->
     </Grid>
 </Page>

@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Popups;
 using Microsoft.WindowsAzure.MobileServices;
+using Windows.Security.Credentials;     
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -138,28 +139,75 @@ namespace BikeR.WPApp
         private async System.Threading.Tasks.Task AuthenticateAsync(MobileServiceAuthenticationProvider authProvider)
         {
 
-            string message = "";
-            bool error = false;
+            string message;
+            // This sample uses the Facebook provider.
 
-            while (user == null || error)
+
+            // Use the PasswordVault to securely store and access credentials.
+            PasswordVault vault = new PasswordVault();
+            PasswordCredential credential = null;
+
+            while (credential == null)
             {
-
                 try
                 {
-                    user = await App.proxy
-                        .LoginAsync(authProvider);
-                    message =
-                        string.Format("You are now logged in - {0}", user.UserId);
+                    // Try to get an existing credential from the vault.
+                    credential = vault.FindAllByResource(authProvider.ToString()).FirstOrDefault();
                 }
-                catch (InvalidOperationException)
+                catch (Exception)
                 {
-                    error = true;
-                    message = "You must log in. Login Required";
+                    // When there is no matching resource an error occurs, which we ignore.
                 }
-            }
+
+                if (credential != null)
+                {
+                    // Create a user from the stored credentials.
+                    user = new MobileServiceUser(credential.UserName);
+                    credential.RetrievePassword();
+                    user.MobileServiceAuthenticationToken = credential.Password;
+
+                    // Set the user from the stored credentials.
+                    App.proxy.CurrentUser = user;
+
+                    try
+                    {
+                        // Try to return an item now to determine if the cached credential has expired.
+                        await App.proxy.GetTable<NfcFiels>().Take(1).ToListAsync();
+                    }
+                    catch (MobileServiceInvalidOperationException ex)
+                    {
+                        if (ex.Response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                        {
+                            // Remove the credential with the expired token.
+                            vault.Remove(credential);
+                            credential = null;
+                            continue;
+                        }
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        // Login with the identity provider.
+                        user = await App.proxy
+                            .LoginAsync(authProvider);
+
+                        // Create and store the user credentials.
+                        credential = new PasswordCredential(authProvider.ToString(),
+                            user.UserId, user.MobileServiceAuthenticationToken);
+                        vault.Add(credential);
+                    }
+                    catch (MobileServiceInvalidOperationException ex)
+                    {
+                        message = "You must log in. Login Required";
+                    }
+                }
+                message = string.Format("You are now logged in - {0}", user.UserId);
                 var dialog = new MessageDialog(message);
                 dialog.Commands.Add(new UICommand("OK"));
                 await dialog.ShowAsync();
+            }
   
 
 
