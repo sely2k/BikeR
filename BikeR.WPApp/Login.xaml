@@ -38,13 +38,13 @@
                 BorderBrush="White" 
                 Foreground="#FFFAFAFA" 
                 Height="70" 
-                Background="#FF566FA5" 
+                Background="#FF1E4389" 
                 Padding="0" 
                 BorderThickness="0,0,5,0" 
                 Margin="25,0" MinHeight="50" 
                 HorizontalContentAlignment="Left" >
-       
-                
+
+
                 <StackPanel 
                     Orientation="Horizontal" 
                     HorizontalAlignment="Left" 
@@ -55,14 +55,15 @@
                         Width="50" 
                         Source="Assets/SmallLogo.png" 
                         Margin="0" />
-                    
-                    <TextBlock 
-                        
-                        Text="Login With Facebook" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0" />
-           
-       
-               
-                    
+
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0" SelectionChanged="TextBlock_SelectionChanged_1" >
+                    	<Run Text="Sign in with "/>
+                    	<Run FontWeight="Bold" Text="Facebook"/>
+                    </TextBlock>
+
+
+
+
                 </StackPanel>
 
             </Button>
@@ -73,7 +74,7 @@
                 BorderBrush="White" 
                 Foreground="#FFFAFAFA" 
                 Height="70" 
-                Background="#FF7F92F0" 
+                Background="#FFD5482C" 
                 Padding="0" 
                 BorderThickness="0,0,5,0" 
                 Margin="25,0" MinHeight="50" 
@@ -93,7 +94,7 @@
 
                     <TextBlock 
                         
-                        Text="Login With Google" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0" />
+                        Text="Sign in with Google Account" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0" FontWeight="Bold" />
 
 
 
@@ -108,7 +109,7 @@
                 BorderBrush="White" 
                 Foreground="#FFFAFAFA" 
                 Height="70" 
-                Background="#FF44A6EC" 
+                Background="#FF28AAE1" 
                 Padding="0" 
                 BorderThickness="0,0,5,0" 
                 Margin="25,0" MinHeight="50" 
@@ -128,7 +129,7 @@
 
                     <TextBlock 
                         
-                        Text="Login With Twitter" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0" />
+                        Text="Sign in with Twitter" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0" FontWeight="Bold" SelectionChanged="TextBlock_SelectionChanged" />
 
 
 
@@ -136,6 +137,42 @@
                 </StackPanel>
 
             </Button>
+            <Button 
+                x:Name="btnMicrosoft" 
+                Tapped="btnMictosoftLogin_Tapped"                 HorizontalAlignment="Stretch" 
+                VerticalAlignment="Center" 
+                BorderBrush="White" 
+                Foreground="#FFFAFAFA" 
+                Height="70" 
+                Background="#FF29AAE0" 
+                Padding="0" 
+                BorderThickness="0,0,5,0" 
+                Margin="25,0" MinHeight="50" 
+                HorizontalContentAlignment="Left" >
+
+
+                <StackPanel 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center">
+                    <Image 
+                        
+                        Height="50" 
+                        Width="50" 
+                        Source="Assets/SmallLogo.png" 
+                        Margin="0" />
+
+                    <TextBlock 
+                        
+                        Text="Sign in with Live ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0" FontWeight="Bold" />
+
+
+
+
+                </StackPanel>
+
+            </Button>
+
 
         </StackPanel>
 
