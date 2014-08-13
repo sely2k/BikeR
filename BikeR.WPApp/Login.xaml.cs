@@ -136,6 +136,12 @@ namespace BikeR.WPApp
         }
 
 
+        private async void btnMictosoftLogin_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            await AuthenticateAsync(MobileServiceAuthenticationProvider.MicrosoftAccount);
+            Frame.Navigate(typeof(PivotPage));
+        }
+
         private async System.Threading.Tasks.Task AuthenticateAsync(MobileServiceAuthenticationProvider authProvider)
         {
 
@@ -215,6 +221,16 @@ namespace BikeR.WPApp
 
 
             
+        }
+
+        private void TextBlock_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TextBlock_SelectionChanged_1(object sender, RoutedEventArgs e)
+        {
+
         }
 
 
