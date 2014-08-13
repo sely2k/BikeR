@@ -17,7 +17,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Popups;
 using Microsoft.WindowsAzure.MobileServices;
-using Windows.Security.Credentials;     
+using Windows.Security.Credentials;
+using BikeR.WPApp.DataModel;     
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -178,7 +179,8 @@ namespace BikeR.WPApp
                     try
                     {
                         // Try to return an item now to determine if the cached credential has expired.
-                        await App.proxy.GetTable<NfcFiels>().Take(1).ToListAsync();
+                        var a =await App.proxy.GetTable<NfcField>().Take(1).ToListAsync();
+                       
                     }
                     catch (MobileServiceInvalidOperationException ex)
                     {
@@ -189,6 +191,10 @@ namespace BikeR.WPApp
                             credential = null;
                             continue;
                         }
+                    }
+                    catch(Exception e)
+                    {
+                        var str = e.Message;
                     }
                 }
                 else

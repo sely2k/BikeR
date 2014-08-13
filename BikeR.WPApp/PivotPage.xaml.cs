@@ -199,11 +199,26 @@ namespace BikeR.WPApp
 
         #endregion
 
-        private async void Button_Tapped(object sender, TappedRoutedEventArgs e)
+
+
+        private async void ReadTag_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+        }
+        
+
+        private async void BuildTag_Tapped(object sender, TappedRoutedEventArgs e)
         {
 
 
-            NfcField field = new NfcField() { nfctagid = "" };
+            NfcField field = new NfcField() 
+            { 
+                TagContent=nfcTagContent.Text,
+                TagStatus = "Active",
+                Note = nfcNote.Text,
+                FriendlyName = nfcFriendlyName.Text,
+                TagKind= "selfbuild"
+            };
             try
             {
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +9,28 @@ namespace BikeR.WPApp.DataModel
 {
     public class NfcField
     {
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
-        public string id { get; set; }
-        public string nfctagid { get; set; }
-        public string note { get; set; }
-        public string qualifiedtag { get; set; }
+        [JsonProperty(PropertyName = "friendlyname")]
+        public string FriendlyName { get; set; }
 
-        public string kindoftag { get; set; }
+        [JsonProperty(PropertyName = "tagcontent")]
+        public string TagContent { get; set; }
 
-        public string userid { get; set; }
+
+        [JsonProperty(PropertyName = "tagstatus")]
+        public string TagStatus { get; set; }
+
+
+        [JsonProperty(PropertyName = "tagkind")]
+        public string TagKind { get; set; }
+
+        [JsonProperty(PropertyName = "note")]
+        public string Note { get; set; }
+
+
+        [JsonProperty(PropertyName = "userid")]
+        public string UserId { get; set; }
     }
 }
