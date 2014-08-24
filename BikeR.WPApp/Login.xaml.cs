@@ -18,7 +18,10 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI.Popups;
 using Microsoft.WindowsAzure.MobileServices;
 using Windows.Security.Credentials;
-using BikeR.WPApp.DataModel;     
+using BikeR.WPApp.DataModel;
+using Windows.System.Profile;
+using Windows.Storage.Streams;
+using Windows.Security.Cryptography;     
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -39,7 +42,28 @@ namespace BikeR.WPApp
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+
+
+
+
+            var s = GetHardwareId();
+            //var g = DeviceExtendedProperties.GetValue("DeviceUniqueId");
         }
+
+
+
+        private string GetHardwareId()
+        {
+            var token = HardwareIdentification.GetPackageSpecificToken(null);
+            var hardwareId = token.Id;
+            var dataReader = Windows.Storage.Streams.DataReader.FromBuffer(hardwareId);
+
+            byte[] bytes = new byte[hardwareId.Length];
+            dataReader.ReadBytes(bytes);
+
+            return BitConverter.ToString(bytes);
+        }
+
 
         /// <summary>
         /// Gets the <see cref="NavigationHelper"/> associated with this <see cref="Page"/>.
@@ -229,15 +253,7 @@ namespace BikeR.WPApp
             
         }
 
-        private void TextBlock_SelectionChanged(object sender, RoutedEventArgs e)
-        {
 
-        }
-
-        private void TextBlock_SelectionChanged_1(object sender, RoutedEventArgs e)
-        {
-
-        }
 
 
 

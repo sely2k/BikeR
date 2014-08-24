@@ -56,7 +56,7 @@
                         Source="Assets/SmallLogo.png" 
                         Margin="0" />
 
-                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0" SelectionChanged="TextBlock_SelectionChanged_1" >
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0"  >
                     	<Run Text="Sign in with "/>
                     	<Run FontWeight="Bold" Text="Facebook"/>
                     </TextBlock>
@@ -129,7 +129,11 @@
 
                     <TextBlock 
                         
-                        Text="Sign in with Twitter" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0" FontWeight="Bold" SelectionChanged="TextBlock_SelectionChanged" />
+                        Text="Sign in with Twitter" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Left" 
+                        Margin="25,0,0,0" 
+                        FontWeight="Bold" />
 
 
 

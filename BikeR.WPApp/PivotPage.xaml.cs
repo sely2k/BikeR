@@ -1,5 +1,5 @@
 ﻿using BikeR.WPApp.Common;
-using BikeR.WPApp.Data;
+
 using BikeR.WPApp.DataModel;
 using Microsoft.WindowsAzure.MobileServices;
 using System;
@@ -28,8 +28,8 @@ namespace BikeR.WPApp
 {
     public sealed partial class PivotPage : Page
     {
-        private const string FirstGroupName = "FirstGroup";
-        private const string SecondGroupName = "SecondGroup";
+        private const string FirstGroupName = "List of Tag";
+        private const string SecondGroupName = "Builld your tag";
 
         private readonly NavigationHelper navigationHelper;
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
@@ -41,6 +41,35 @@ namespace BikeR.WPApp
         #region DPs
 
 
+
+
+        public ObservableCollection<NfcField> NFCObservableCollection
+        {
+            get { return (ObservableCollection<NfcField>)GetValue(NFCObservableCollectionProperty); }
+            set { SetValue(NFCObservableCollectionProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for NFCObservableCollection.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty NFCObservableCollectionProperty =
+            DependencyProperty.Register
+            (
+                "NFCObservableCollection", 
+                typeof(ObservableCollection<NfcField>), 
+                typeof(PivotPage), 
+                new PropertyMetadata
+                (
+                    new ObservableCollection<NfcField>()
+                )
+            );
+
+        
+
+
+
+        
+
+
+
         public MobileServiceCollection<NfcField, NfcField> NfcItems
         {
             get { return (MobileServiceCollection<NfcField, NfcField>)GetValue(NfcItemsProperty); }
@@ -48,7 +77,7 @@ namespace BikeR.WPApp
         }
 
         // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty NfcItemsProperty =
+        public static DependencyProperty NfcItemsProperty =
             DependencyProperty.Register
             (
                 "NfcItems", 
@@ -68,8 +97,11 @@ namespace BikeR.WPApp
             this.InitializeComponent();
 
 
-            NfcListView.DataContext = NfcItems;
-
+            //NfcListView.DataContext = NfcItems;
+            NfcListView.DataContext = this;
+            
+            RefreshNfcItems();
+            //NfcListView.ItemsSource = NFCObservableCollection;
             this.NavigationCacheMode = NavigationCacheMode.Required;
 
             this.navigationHelper = new NavigationHelper(this);
@@ -108,8 +140,8 @@ namespace BikeR.WPApp
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             // TODO: Create an appropriate data model for your problem domain to replace the sample data
-            var sampleDataGroup = await SampleDataSource.GetGroupAsync("Group-1");
-            this.DefaultViewModel[FirstGroupName] = sampleDataGroup;
+            //var sampleDataGroup = await SampleDataSource.GetGroupAsync("Group-1");
+            //this.DefaultViewModel[FirstGroupName] = sampleDataGroup;
         }
 
         /// <summary>
@@ -131,22 +163,12 @@ namespace BikeR.WPApp
         private void AddAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             string groupName = this.pivot.SelectedIndex == 0 ? FirstGroupName : SecondGroupName;
-            var group = this.DefaultViewModel[groupName] as SampleDataGroup;
-            var nextItemId = group.Items.Count + 1;
-            var newItem = new SampleDataItem(
-                string.Format(CultureInfo.InvariantCulture, "Group-{0}-Item-{1}", this.pivot.SelectedIndex + 1, nextItemId),
-                string.Format(CultureInfo.CurrentCulture, this.resourceLoader.GetString("NewItemTitle"), nextItemId),
-                string.Empty,
-                string.Empty,
-                this.resourceLoader.GetString("NewItemDescription"),
-                string.Empty);
-
-            group.Items.Add(newItem);
-
+            //var group = this.DefaultViewModel[groupName] as SampleDataGroup;
+          
             // Scroll the new item into view.
             var container = this.pivot.ContainerFromIndex(this.pivot.SelectedIndex) as ContentControl;
             var listView = container.ContentTemplateRoot as ListView;
-            listView.ScrollIntoView(newItem, ScrollIntoViewAlignment.Leading);
+           // listView.ScrollIntoView(newItem, ScrollIntoViewAlignment.Leading);
         }
 
         /// <summary>
@@ -156,8 +178,8 @@ namespace BikeR.WPApp
         {
             // Navigate to the appropriate destination page, configuring the new page
             // by passing required information as a navigation parameter
-            var itemId = ((SampleDataItem)e.ClickedItem).UniqueId;
-            if (!Frame.Navigate(typeof(ItemPage), itemId))
+            var clickedNfc = ((NfcField)e.ClickedItem);
+            if (!Frame.Navigate(typeof(ItemPage), clickedNfc))
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }
@@ -168,8 +190,6 @@ namespace BikeR.WPApp
         /// </summary>
         private async void SecondPivot_Loaded(object sender, RoutedEventArgs e)
         {
-            var sampleDataGroup = await SampleDataSource.GetGroupAsync("Group-2");
-            this.DefaultViewModel[SecondGroupName] = sampleDataGroup;
         }
 
         #region NavigationHelper registration
@@ -205,7 +225,7 @@ namespace BikeR.WPApp
         {
 
         }
-        
+
 
         private async void BuildTag_Tapped(object sender, TappedRoutedEventArgs e)
         {
@@ -238,18 +258,21 @@ namespace BikeR.WPApp
 
 
 
-        private async void RefreshNfcItems()
+        private void RefreshNfcItems()
         {
             // This code refreshes the entries in the list view be querying the TodoItems table.
             // The query excludes completed TodoItems
-            try
-            {
-                NfcItems = await NfcTable.ToCollectionAsync();
-            }
-            catch (MobileServiceInvalidOperationException e)
-            {
+            NFCObservableCollection = new ObservableCollection<NfcField>();
+            NFCObservableCollection.Add(new NfcField() { FriendlyName = "ciao" });
+
+            //try
+            //{
+            //    NfcItems = await NfcTable.ToCollectionAsync();
+            //}
+            //catch (MobileServiceInvalidOperationException e)
+            //{
                 
-            }
+            //}
 
         }
 
