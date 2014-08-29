@@ -18,7 +18,22 @@
             </NavigationThemeTransition>
         </TransitionCollection>
     </Page.Transitions>
+    
+    <Page.Resources>
 
+        <LinearGradientBrush x:Key="mmm" StartPoint="0,0" EndPoint="1,1" SpreadMethod="Repeat">
+            <GradientStop Offset="0" Color="DarkRed" />
+            <GradientStop Offset="0.5" Color="DarkRed" />
+
+            <GradientStop Offset="0.5" Color="Black" />
+            <GradientStop Offset="1" Color="Black" />
+            <LinearGradientBrush.RelativeTransform>
+                <ScaleTransform ScaleX="0.1" ScaleY="0.1" />
+            </LinearGradientBrush.RelativeTransform>
+        </LinearGradientBrush>
+
+    </Page.Resources>
+  
     <Grid>
         
 
@@ -34,22 +49,34 @@
                 <ListView
                     
                     x:Name="NfcListView"
-ItemsSource="{Binding}"
+                    ItemsSource="{Binding NFCObservableCollection}"
                     IsItemClickEnabled="True"
                     ItemClick="ItemView_ItemClick"
                     ContinuumNavigationTransitionInfo.ExitElementContainer="True">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Margin="0,0,0,9.5">
-                                <TextBlock
-                                    Text="{Binding userid}"
-                                    TextWrapping="Wrap"
-                                    Pivot.SlideInAnimationGroup="1"
-                                    CommonNavigationTransitionInfo.IsStaggerElement="True"
+                            <Grid   Margin="0,0,0,9.5" Height="75">
 
-                                    Margin="0,0,19,0"/>
-     
-                            </StackPanel>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                
+                                <Border Grid.Column="0" Background="{StaticResource mmm}" />
+                                <StackPanel
+                                    Grid.Column="1" >
+                                    <TextBlock
+                                        Text="{Binding Path=FriendlyName}"
+                                        TextWrapping="Wrap"
+                                        Pivot.SlideInAnimationGroup="1"
+                                        CommonNavigationTransitionInfo.IsStaggerElement="True"
+                                        Margin="10,0,19,0" FontSize="24"/>
+                                    <TextBlock />
+
+                                </StackPanel>
+                                
+                            </Grid>
+                         
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
@@ -66,10 +93,29 @@ ItemsSource="{Binding}"
                 
                 
                 <StackPanel>
+                    <TextBlock Text="tag content" />
+                    <TextBox x:Name="nfcTagContent" Text=""/>
+
                     <TextBlock Text="nome" />
-                    <TextBox x:Name="nfcId" Text=""/>
+                    <TextBox x:Name="nfcFriendlyName" Text=""/>
+
+                    <TextBlock Text="note" />
+                    <TextBox x:Name="nfcNote" Text=""/>
                     
-                    <Button Content="create Nfc" Tapped="Button_Tapped" Click="Button_Click" />
+                    <StackPanel
+                        Orientation="Horizontal" >
+                        <Button 
+                            x:Name="btnBuildTag"
+                            Content="build Nfc Tag" 
+                            Tapped="BuildTag_Tapped" />
+                        
+                        <Button 
+                            x:Name="btnReadTag"
+                            Content="build Nfc Tag" 
+                            Tapped="ReadTag_Tapped" />                        
+
+                    </StackPanel>
+
                     
                     
                 </StackPanel>
@@ -77,7 +123,7 @@ ItemsSource="{Binding}"
         </Pivot>
     </Grid>
 
-    <Page.BottomAppBar>
+    <!--<Page.BottomAppBar>
         <CommandBar>
             <AppBarButton x:Uid="AddAppBarButton" x:Name="AddAppBarButton" Label="add" Icon="Add" Click="AddAppBarButton_Click" />
             <CommandBar.SecondaryCommands>
@@ -85,5 +131,5 @@ ItemsSource="{Binding}"
                 <AppBarButton x:Uid="SecondaryButton2" x:Name="SecondaryButton2" Label="secondary command 2" />
             </CommandBar.SecondaryCommands>
         </CommandBar>
-    </Page.BottomAppBar>
+    </Page.BottomAppBar>-->
 </Page>

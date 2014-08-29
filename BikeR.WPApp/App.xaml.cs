@@ -30,7 +30,11 @@ namespace BikeR.WPApp
     public sealed partial class App : Application
     {
 
-        public static MobileServiceClient proxy = new MobileServiceClient("https://bikermobilews.azure-mobile.net/", "lsFLaUlAkVwopmYxywkaRwRUhTRTGF59");
+        public static MobileServiceClient proxy = new MobileServiceClient
+        (
+            "https://biker.azure-mobile.net/", 
+            "rJnxfRUFnQqlCCdaBgGljIwnEBOkil11"
+        );
 
 
         private TransitionCollection transitions;
@@ -146,7 +150,7 @@ namespace BikeR.WPApp
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter.
-                if (!rootFrame.Navigate(typeof(Login), e.Arguments))
+                if (!rootFrame.Navigate(typeof(PivotPage), e.Arguments))
                 {
                     throw new Exception("Failed to create initial page");
                 }

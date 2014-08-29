@@ -10,7 +10,7 @@
 
     <Grid x:Name="LayoutRoot">
 
-        <Grid.ChildrenTransitions>
+        <!--<Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>
             </TransitionCollection>
@@ -19,23 +19,167 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        </Grid.RowDefinitions>-->
 
         <!-- Title Panel -->
-        <StackPanel Grid.Row="0" Margin="19,0,0,0">
+        <!--<StackPanel Grid.Row="0" Margin="19,0,0,0">
             <TextBlock Text="MY APPLICATION" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
             <TextBlock Text="page title" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
-        </StackPanel>
+        </StackPanel>-->
 
         <!--TODO: Content should be placed within the following grid-->
-        <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
-            <StackPanel Margin="0">
-                <Button x:Name="btnFacebookLogin" Content="Facebook" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Tapped="btnFacebookLogin_Tapped"/>
-                <Button x:Name="btnGoogle" Content="Google" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Tapped="btnGoogleLogin_Tapped" />
-                <Button x:Name="btnTwitter" Content="Google" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Tapped="btnTwitterLogin_Tapped" />
+        <!--<Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">-->
+        <StackPanel Margin="0,0,0,50" VerticalAlignment="Bottom">
+            <Button 
+                x:Name="btnFacebookLogin" 
+                Tapped="btnFacebookLogin_Tapped"  
+                HorizontalAlignment="Stretch" 
+                VerticalAlignment="Center" 
+                BorderBrush="White" 
+                Foreground="#FFFAFAFA" 
+                Height="70" 
+                Background="#FF1E4389" 
+                Padding="0" 
+                BorderThickness="0,0,5,0" 
+                Margin="25,0" MinHeight="50" 
+                HorizontalContentAlignment="Left" >
 
-            </StackPanel>
 
-        </Grid>
+                <StackPanel 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center">
+                    <Image 
+                        
+                        Height="50" 
+                        Width="50" 
+                        Source="Assets/SmallLogo.png" 
+                        Margin="0" />
+
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0"  >
+                    	<Run Text="Sign in with "/>
+                    	<Run FontWeight="Bold" Text="Facebook"/>
+                    </TextBlock>
+
+
+
+
+                </StackPanel>
+
+            </Button>
+            <Button 
+                x:Name="btnGoogle" 
+                Tapped="btnGoogleLogin_Tapped"                 HorizontalAlignment="Stretch" 
+                VerticalAlignment="Center" 
+                BorderBrush="White" 
+                Foreground="#FFFAFAFA" 
+                Height="70" 
+                Background="#FFD5482C" 
+                Padding="0" 
+                BorderThickness="0,0,5,0" 
+                Margin="25,0" MinHeight="50" 
+                HorizontalContentAlignment="Left" >
+
+
+                <StackPanel 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center">
+                    <Image 
+                        
+                        Height="50" 
+                        Width="50" 
+                        Source="Assets/SmallLogo.png" 
+                        Margin="0" />
+
+                    <TextBlock 
+                        
+                        Text="Sign in with Google Account" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0" FontWeight="Bold" />
+
+
+
+
+                </StackPanel>
+
+            </Button>
+            <Button 
+                x:Name="btnTwitter" 
+                Tapped="btnTwitterLogin_Tapped"                 HorizontalAlignment="Stretch" 
+                VerticalAlignment="Center" 
+                BorderBrush="White" 
+                Foreground="#FFFAFAFA" 
+                Height="70" 
+                Background="#FF28AAE1" 
+                Padding="0" 
+                BorderThickness="0,0,5,0" 
+                Margin="25,0" MinHeight="50" 
+                HorizontalContentAlignment="Left" >
+
+
+                <StackPanel 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center">
+                    <Image 
+                        
+                        Height="50" 
+                        Width="50" 
+                        Source="Assets/SmallLogo.png" 
+                        Margin="0" />
+
+                    <TextBlock 
+                        
+                        Text="Sign in with Twitter" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Left" 
+                        Margin="25,0,0,0" 
+                        FontWeight="Bold" />
+
+
+
+
+                </StackPanel>
+
+            </Button>
+            <Button 
+                x:Name="btnMicrosoft" 
+                Tapped="btnMictosoftLogin_Tapped"                 HorizontalAlignment="Stretch" 
+                VerticalAlignment="Center" 
+                BorderBrush="White" 
+                Foreground="#FFFAFAFA" 
+                Height="70" 
+                Background="#FF29AAE0" 
+                Padding="0" 
+                BorderThickness="0,0,5,0" 
+                Margin="25,0" MinHeight="50" 
+                HorizontalContentAlignment="Left" >
+
+
+                <StackPanel 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center">
+                    <Image 
+                        
+                        Height="50" 
+                        Width="50" 
+                        Source="Assets/SmallLogo.png" 
+                        Margin="0" />
+
+                    <TextBlock 
+                        
+                        Text="Sign in with Live ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0" FontWeight="Bold" />
+
+
+
+
+                </StackPanel>
+
+            </Button>
+
+
+        </StackPanel>
+
+        <!--</Grid>-->
     </Grid>
 </Page>

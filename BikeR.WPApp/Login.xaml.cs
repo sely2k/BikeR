@@ -17,6 +17,11 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Popups;
 using Microsoft.WindowsAzure.MobileServices;
+using Windows.Security.Credentials;
+using BikeR.WPApp.DataModel;
+using Windows.System.Profile;
+using Windows.Storage.Streams;
+using Windows.Security.Cryptography;     
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -37,7 +42,28 @@ namespace BikeR.WPApp
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+
+
+
+
+            var s = GetHardwareId();
+            //var g = DeviceExtendedProperties.GetValue("DeviceUniqueId");
         }
+
+
+
+        private string GetHardwareId()
+        {
+            var token = HardwareIdentification.GetPackageSpecificToken(null);
+            var hardwareId = token.Id;
+            var dataReader = Windows.Storage.Streams.DataReader.FromBuffer(hardwareId);
+
+            byte[] bytes = new byte[hardwareId.Length];
+            dataReader.ReadBytes(bytes);
+
+            return BitConverter.ToString(bytes);
+        }
+
 
         /// <summary>
         /// Gets the <see cref="NavigationHelper"/> associated with this <see cref="Page"/>.
@@ -135,31 +161,89 @@ namespace BikeR.WPApp
         }
 
 
+        private async void btnMictosoftLogin_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            await AuthenticateAsync(MobileServiceAuthenticationProvider.MicrosoftAccount);
+            Frame.Navigate(typeof(PivotPage));
+        }
+
         private async System.Threading.Tasks.Task AuthenticateAsync(MobileServiceAuthenticationProvider authProvider)
         {
 
-            string message = "";
-            bool error = false;
+            string message;
+            // This sample uses the Facebook provider.
 
-            while (user == null || error)
+
+            // Use the PasswordVault to securely store and access credentials.
+            PasswordVault vault = new PasswordVault();
+            PasswordCredential credential = null;
+
+            while (credential == null)
             {
-
                 try
                 {
-                    user = await App.proxy
-                        .LoginAsync(authProvider);
-                    message =
-                        string.Format("You are now logged in - {0}", user.UserId);
+                    // Try to get an existing credential from the vault.
+                    credential = vault.FindAllByResource(authProvider.ToString()).FirstOrDefault();
                 }
-                catch (InvalidOperationException)
+                catch (Exception)
                 {
-                    error = true;
-                    message = "You must log in. Login Required";
+                    // When there is no matching resource an error occurs, which we ignore.
                 }
-            }
+
+                if (credential != null)
+                {
+                    // Create a user from the stored credentials.
+                    user = new MobileServiceUser(credential.UserName);
+                    credential.RetrievePassword();
+                    user.MobileServiceAuthenticationToken = credential.Password;
+
+                    // Set the user from the stored credentials.
+                    App.proxy.CurrentUser = user;
+
+                    try
+                    {
+                        // Try to return an item now to determine if the cached credential has expired.
+                        var a =await App.proxy.GetTable<NfcField>().Take(1).ToListAsync();
+                       
+                    }
+                    catch (MobileServiceInvalidOperationException ex)
+                    {
+                        if (ex.Response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                        {
+                            // Remove the credential with the expired token.
+                            vault.Remove(credential);
+                            credential = null;
+                            continue;
+                        }
+                    }
+                    catch(Exception e)
+                    {
+                        var str = e.Message;
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        // Login with the identity provider.
+                        user = await App.proxy
+                            .LoginAsync(authProvider);
+
+                        // Create and store the user credentials.
+                        credential = new PasswordCredential(authProvider.ToString(),
+                            user.UserId, user.MobileServiceAuthenticationToken);
+                        vault.Add(credential);
+                    }
+                    catch (MobileServiceInvalidOperationException ex)
+                    {
+                        message = "You must log in. Login Required";
+                    }
+                }
+                message = string.Format("You are now logged in - {0}", user.UserId);
                 var dialog = new MessageDialog(message);
                 dialog.Commands.Add(new UICommand("OK"));
                 await dialog.ShowAsync();
+            }
   
 
 
@@ -168,6 +252,8 @@ namespace BikeR.WPApp
 
             
         }
+
+
 
 
 

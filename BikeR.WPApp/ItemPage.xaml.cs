@@ -1,5 +1,5 @@
 ﻿using BikeR.WPApp.Common;
-using BikeR.WPApp.Data;
+using BikeR.WPApp.DataModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -70,7 +70,7 @@ namespace BikeR.WPApp
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             // TODO: Create an appropriate data model for your problem domain to replace the sample data.
-            var item = await SampleDataSource.GetItemAsync((string)e.NavigationParameter);
+            var item = (NfcField)e.NavigationParameter;
             this.DefaultViewModel["Item"] = item;
         }
 
