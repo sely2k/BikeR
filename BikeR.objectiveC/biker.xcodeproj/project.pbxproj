@@ -25,7 +25,6 @@
 		03D1006616ED41D20005A1A9 /* connected72.png in Resources */ = {isa = PBXBuildFile; fileRef = 03D1006216ED41D20005A1A9 /* connected72.png */; };
 		03D1006716ED41D20005A1A9 /* connected114.png in Resources */ = {isa = PBXBuildFile; fileRef = 03D1006316ED41D20005A1A9 /* connected114.png */; };
 		03D1006816ED41D20005A1A9 /* connected144.png in Resources */ = {isa = PBXBuildFile; fileRef = 03D1006416ED41D20005A1A9 /* connected144.png */; };
-		E9FB633B199ACDCA00B029AB /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FB633A199ACDCA00B029AB /* KeychainWrapper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,8 +52,6 @@
 		03D1006216ED41D20005A1A9 /* connected72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connected72.png; sourceTree = "<group>"; };
 		03D1006316ED41D20005A1A9 /* connected114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connected114.png; sourceTree = "<group>"; };
 		03D1006416ED41D20005A1A9 /* connected144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connected144.png; sourceTree = "<group>"; };
-		E9FB6339199ACDCA00B029AB /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainWrapper.h; sourceTree = "<group>"; };
-		E9FB633A199ACDCA00B029AB /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,8 +109,6 @@
 				03D1002C16EC579A0005A1A9 /* QSAppDelegate.h */,
 				03D1002D16EC579A0005A1A9 /* QSAppDelegate.m */,
 				03D1002416EC579A0005A1A9 /* Supporting Files */,
-				E9FB6339199ACDCA00B029AB /* KeychainWrapper.h */,
-				E9FB633A199ACDCA00B029AB /* KeychainWrapper.m */,
 			);
 			path = biker;
 			sourceTree = "<group>";
@@ -217,7 +212,6 @@
 				03D1002E16EC579A0005A1A9 /* QSAppDelegate.m in Sources */,
 				03D1004716EC58300005A1A9 /* QSTodoListViewController.m in Sources */,
 				03D1004A16EC58490005A1A9 /* QSTodoService.m in Sources */,
-				E9FB633B199ACDCA00B029AB /* KeychainWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
