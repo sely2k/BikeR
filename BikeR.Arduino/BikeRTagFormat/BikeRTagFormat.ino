@@ -33,15 +33,28 @@
 
 Adafruit_NFCShield_I2C nfc(IRQ, RESET);
 
-const char * url = "bikerweb.azurewebsites.net/";
-
-
-uint8_t bikerId[16] = { '1', '2', '3', '4', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+/*
+    We can encode many different kinds of pointers to the card,
+    from a URL, to an Email address, to a phone number, and many more
+    check the library header .h file to see the large # of supported
+    prefixes!
+*/
+// For a http://www. url:
+const char * url = "google.com";
 uint8_t ndefprefix = NDEF_URIPREFIX_HTTP_WWWDOT;
 
+uint8_t bikeRId[16]={ 'k', 'a', 'n', 'g', 'r', 'u', 'b', 'u', '.', 'c', 'o', 'm', 0, 0, 0, 0};
+
+// for an email address
+//const char * url = "mail@example.com";
+//uint8_t ndefprefix = NDEF_URIPREFIX_MAILTO;
+
+// for a phone number
+//const char * url = "+1 212 555 1212";
+//uint8_t ndefprefix = NDEF_URIPREFIX_TEL;
 
 
-void setup() {
+void setup(void) {
   Serial.begin(115200);
   Serial.println("Looking for PN532...");
 
@@ -60,7 +73,6 @@ void setup() {
 
   // configure board to read RFID tags
   nfc.SAMConfig();
-
 }
 
 void loop(void) {
@@ -71,13 +83,10 @@ void loop(void) {
 
   // Use the default key
   uint8_t keya[6] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
+  uint8_t keyz[6] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
   
-  
-  uint8_t idx = 0;
-  uint8_t numOfSector = 16;                 // Assume Mifare Classic 1K for now (16 4-block sectors)
-  
-  
-  
+  uint8_t keyb[6] = { 0xA0, 0xA1, 0xA2, 0xA3, 0xA4, 0xA5 };
+  uint8_t keyc[6] = { 0xD3, 0xF7, 0xD3, 0xF7, 0xD3, 0xF7 };
 
   Serial.println("");
   Serial.println("PLEASE NOTE: Formatting your card for NDEF records will change the");
@@ -128,11 +137,16 @@ void loop(void) {
       Serial.println("Unable to format the card for NDEF");
       return;
     }
-
+   
+    
+    ////////////
+    success = nfc.mifareclassic_AuthenticateBlock (uid, uidLength, 4, 0, keya);
+  
+    
     Serial.println("Card has been formatted for NDEF data using MAD1");
 
     // Try to authenticate block 4 (first block of sector 1) using our key
-    success = nfc.mifareclassic_AuthenticateBlock (uid, uidLength, 4, 0, keya);
+    
 
     // Make sure the authentification process didn't fail
     if (!success)
@@ -159,12 +173,7 @@ void loop(void) {
     }
 
     // URI is within size limits ... write it to the card and report success/failure
-    
-    uint8_t blockToWrite = 1;
-    Serial.print("Write URL: ");
-    Serial.println(url);
-    success = nfc.mifareclassic_WriteNDEFURI(blockToWrite++, ndefprefix, url);
-   
+    success = nfc.mifareclassic_WriteNDEFURI(1, ndefprefix, url);
     if (success)
     {
       Serial.println("NDEF URI Record written to sector 1");
@@ -174,12 +183,41 @@ void loop(void) {
       Serial.println("NDEF Record creation failed! :(");
     }
     
-    if (success)
+    
+    
+    //////////////////////
+    success = nfc.mifareclassic_AuthenticateBlock (uid, uidLength, 8, 0, keya);
+    
+    
+    if (!success)
     {
-      success = nfc.mifareclassic_WriteDataBlock(blockToWrite, bikerId);
+      Serial.println("Unable to authenticate block 8 ... is this card NDEF formatted?");
+      return;
     }
     
+    
+      
+    Serial.println("Authentication succeeded (seems to be an NDEF/NFC Forum tag) ...");
 
+
+    
+    Serial.println("Updating sector 2 with URI as NDEF Message");
+    
+    // URI is within size limits ... write it to the card and report success/failure
+    //success = nfc.mifareclassic_WriteNDEFURI(2, ndefprefix, url);
+    success = nfc.mifareclassic_WriteDataBlock(2, bikeRId);
+    if (success)
+    {
+      Serial.println("NDEF URI Record written to sector 2");
+      Serial.println("");      
+    }
+    else
+    {
+      Serial.println("NDEF Record creation failed! :(");
+    }
+    
+    
+    
   }
 
   // Wait a bit before trying again
