@@ -1,4 +1,5 @@
 ﻿using BikeR.WPApp.Common;
+using BikeR.WPApp.DataModel;
 using Microsoft.WindowsAzure.MobileServices;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Security.Credentials;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -35,6 +37,76 @@ namespace BikeR.WPApp
             "https://biker.azure-mobile.net/", 
             "rJnxfRUFnQqlCCdaBgGljIwnEBOkil11"
         );
+
+
+
+        #region password credential
+
+        public static PasswordVault Vault = new PasswordVault();
+        public static PasswordCredential Credential = null;
+        public static MobileServiceUser User;
+
+
+        public static async void RetrievePassFromVault()
+        {
+            bool isAuthenticate = false;
+
+            foreach (var authProvider in Enum.GetValues(typeof(MobileServiceAuthenticationProvider)))
+            {
+                try
+                {
+
+                    App.Credential = Vault.FindAllByResource(authProvider.ToString()).FirstOrDefault();
+                    if (App.Credential != null)
+                    {
+                        isAuthenticate = true;
+
+                        // Create a user from the stored credentials.
+                        App.User = new MobileServiceUser(App.Credential.UserName);
+                        App.Credential.RetrievePassword();
+                        App.User.MobileServiceAuthenticationToken = App.Credential.Password;
+
+                        // Set the user from the stored credentials.
+                        App.proxy.CurrentUser = App.User;
+
+                        try
+                        {
+                            // Try to return an item now to determine if the cached credential has expired.
+                            var a = await App.proxy.GetTable<NfcField>().Take(1).ToListAsync();
+
+                        }
+                        catch (MobileServiceInvalidOperationException ex)
+                        {
+                            if (ex.Response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                            {
+                                // Remove the credential with the expired token.
+                                App.Vault.Remove(App.Credential);
+                                App.Credential = null;
+                                continue;
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            var str = e.Message;
+                        }
+
+
+                    }
+
+                }
+                catch (Exception)
+                {
+                    // When there is no matching resource an error occurs, which we ignore.
+                }
+            }
+
+
+            // Try to get an existing credential from the vault.
+
+        }
+
+        #endregion
+
 
 
         private TransitionCollection transitions;
@@ -81,6 +153,8 @@ namespace BikeR.WPApp
             {
                 App.proxy.LoginComplete(args as WebAuthenticationBrokerContinuationEventArgs);
             }
+
+            //after activation set 
 
         }
 
@@ -150,10 +224,25 @@ namespace BikeR.WPApp
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter.
-                if (!rootFrame.Navigate(typeof(PivotPage), e.Arguments))
+
+
+                RetrievePassFromVault();
+                if (App.Credential == null)
                 {
-                    throw new Exception("Failed to create initial page");
+                    if (!rootFrame.Navigate(typeof(Login), e.Arguments))
+                    {
+                        throw new Exception("Failed to create initial page");
+                    }
+                } else
+                {
+                    if (!rootFrame.Navigate(typeof(PivotPage), e.Arguments))
+                    {
+                        throw new Exception("Failed to create initial page");
+                    }
                 }
+
+
+
             }
 
             // Ensure the current window is active.
@@ -182,6 +271,18 @@ namespace BikeR.WPApp
             var deferral = e.SuspendingOperation.GetDeferral();
             await SuspensionManager.SaveAsync();
             deferral.Complete();
+        }
+
+        internal static void DisconnectAccount()
+        {
+            App.Vault.Remove(App.Credential);
+            App.Credential = null;
+
+
+  
+            
+          
+
         }
     }
 }

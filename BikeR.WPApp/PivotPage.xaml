@@ -37,19 +37,23 @@
     <Grid>
         
 
-        <Pivot x:Uid="Pivot" Title="MY APPLICATION" x:Name="pivot" CommonNavigationTransitionInfo.IsStaggerElement="True">
+        <Pivot 
+            x:Uid="Pivot" 
+            Title="MY APPLICATION" 
+            x:Name="pivot" 
+            CommonNavigationTransitionInfo.IsStaggerElement="True">
             <!--Pivot item one-->
             <PivotItem
                 x:Uid="PivotItem1"
                 Margin="19,14.5,0,0"
-                Header="first"
+                Header="Tag List"
                 
                 CommonNavigationTransitionInfo.IsStaggerElement="True">
                 <!--Double line list with text wrapping-->
                 <ListView
                     
                     x:Name="NfcListView"
-                    ItemsSource="{Binding NFCObservableCollection}"
+                    ItemsSource="{Binding NfcItems}"
                     IsItemClickEnabled="True"
                     ItemClick="ItemView_ItemClick"
                     ContinuumNavigationTransitionInfo.ExitElementContainer="True">
@@ -86,9 +90,7 @@
             <PivotItem
                 x:Uid="PivotItem2"
                 Margin="19,14.5,0,0"
-                Header="second"
-                DataContext="{Binding SecondGroup}"
-                d:DataContext="{Binding Groups[1], Source={d:DesignData Source=/DataModel/SampleData.json, Type=data:SampleDataSource}}">
+                Header="Build New Tag">
                 <!--Double line list no text wrapping-->
                 
                 
@@ -111,7 +113,7 @@
                         
                         <Button 
                             x:Name="btnReadTag"
-                            Content="build Nfc Tag" 
+                            Content="Custom Api" 
                             Tapped="ReadTag_Tapped" />                        
 
                     </StackPanel>
@@ -120,6 +122,26 @@
                     
                 </StackPanel>
             </PivotItem>
+
+            <!--Pivot item two-->
+            <PivotItem
+                Margin="19,14.5,0,0"
+                Header="Disconnect Account">
+
+                <StackPanel>
+                    <TextBlock Text="Disconnect Account" />
+
+
+                        <Button 
+                            x:Name="btnDisconnect"
+                            Content="Disconnect Account" Tapped="Disconnect_Tapped" HorizontalAlignment="Stretch" Margin="0" />
+
+
+
+
+                </StackPanel>
+            </PivotItem>
+
         </Pivot>
     </Grid>
 

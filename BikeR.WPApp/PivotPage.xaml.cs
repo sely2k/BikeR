@@ -53,20 +53,20 @@ namespace BikeR.WPApp
         public static readonly DependencyProperty NFCObservableCollectionProperty =
             DependencyProperty.Register
             (
-                "NFCObservableCollection", 
-                typeof(ObservableCollection<NfcField>), 
-                typeof(PivotPage), 
+                "NFCObservableCollection",
+                typeof(ObservableCollection<NfcField>),
+                typeof(PivotPage),
                 new PropertyMetadata
                 (
                     new ObservableCollection<NfcField>()
                 )
             );
 
-        
 
 
 
-        
+
+
 
 
 
@@ -80,16 +80,16 @@ namespace BikeR.WPApp
         public static DependencyProperty NfcItemsProperty =
             DependencyProperty.Register
             (
-                "NfcItems", 
-                typeof(MobileServiceCollection<NfcField, NfcField>), 
-                typeof(PivotPage), 
+                "NfcItems",
+                typeof(MobileServiceCollection<NfcField, NfcField>),
+                typeof(PivotPage),
                 new PropertyMetadata
                 (
                     null
                 )
             );
 
-        
+
         #endregion
 
         public PivotPage()
@@ -99,7 +99,7 @@ namespace BikeR.WPApp
 
             //NfcListView.DataContext = NfcItems;
             NfcListView.DataContext = this;
-            
+
             RefreshNfcItems();
             //NfcListView.ItemsSource = NFCObservableCollection;
             this.NavigationCacheMode = NavigationCacheMode.Required;
@@ -107,6 +107,10 @@ namespace BikeR.WPApp
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+
+
+            btnDisconnect.IsEnabled = App.Credential != null;
+
         }
 
         /// <summary>
@@ -164,11 +168,11 @@ namespace BikeR.WPApp
         {
             string groupName = this.pivot.SelectedIndex == 0 ? FirstGroupName : SecondGroupName;
             //var group = this.DefaultViewModel[groupName] as SampleDataGroup;
-          
+
             // Scroll the new item into view.
             var container = this.pivot.ContainerFromIndex(this.pivot.SelectedIndex) as ContentControl;
             var listView = container.ContentTemplateRoot as ListView;
-           // listView.ScrollIntoView(newItem, ScrollIntoViewAlignment.Leading);
+            // listView.ScrollIntoView(newItem, ScrollIntoViewAlignment.Leading);
         }
 
         /// <summary>
@@ -185,12 +189,7 @@ namespace BikeR.WPApp
             }
         }
 
-        /// <summary>
-        /// Loads the content for the second pivot item when it is scrolled into view.
-        /// </summary>
-        private async void SecondPivot_Loaded(object sender, RoutedEventArgs e)
-        {
-        }
+
 
         #region NavigationHelper registration
 
@@ -223,6 +222,31 @@ namespace BikeR.WPApp
 
         private async void ReadTag_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            string message;
+            try
+            {
+
+                var par = new Dictionary<string, string>();
+                par.Add("BikeRId", "1");
+                par.Add("y", "1");
+                // Asynchronously call the custom API using the POST method. 
+                var result = await App.proxy
+                    .InvokeApiAsync<int>("isstolenbike",
+                    System.Net.Http.HttpMethod.Post, par);
+
+
+
+                message = result.ToString();
+
+            }
+            catch (MobileServiceInvalidOperationException ex)
+            {
+                message = ex.Message;
+            }
+            catch(Exception ex)
+            {
+                var s = ex.Message;
+            }
 
         }
 
@@ -231,13 +255,13 @@ namespace BikeR.WPApp
         {
 
 
-            NfcField field = new NfcField() 
-            { 
-                TagContent=nfcTagContent.Text,
+            NfcField field = new NfcField()
+            {
+                TagContent = nfcTagContent.Text,
                 TagStatus = "Active",
                 Note = nfcNote.Text,
                 FriendlyName = nfcFriendlyName.Text,
-                TagKind= "selfbuild"
+                TagKind = "selfbuild"
             };
             try
             {
@@ -247,9 +271,9 @@ namespace BikeR.WPApp
 
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
+
             }
 
             RefreshNfcItems();
@@ -258,27 +282,36 @@ namespace BikeR.WPApp
 
 
 
-        private void RefreshNfcItems()
+        private async void RefreshNfcItems()
         {
             // This code refreshes the entries in the list view be querying the TodoItems table.
             // The query excludes completed TodoItems
-            NFCObservableCollection = new ObservableCollection<NfcField>();
-            NFCObservableCollection.Add(new NfcField() { FriendlyName = "ciao" });
+            //NFCObservableCollection = new ObservableCollection<NfcField>();
+            //NFCObservableCollection.Add(new NfcField() { FriendlyName = "ciao" });
 
-            //try
-            //{
-            //    NfcItems = await NfcTable.ToCollectionAsync();
-            //}
-            //catch (MobileServiceInvalidOperationException e)
-            //{
-                
-            //}
+            try
+            {
+                NfcItems = await NfcTable.ToCollectionAsync();
+            }
+            catch (MobileServiceInvalidOperationException e)
+            {
+
+            }
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Disconnect_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            App.DisconnectAccount();
 
+            Frame.Navigate(typeof(Login));
         }
     }
+
+
+    public class MarkAllResult
+    {
+        public int Count { get; set; }
+    }
+
 }
