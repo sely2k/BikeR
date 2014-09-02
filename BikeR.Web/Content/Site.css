@@ -15,3 +15,27 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+#storecontroller ul
+{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-align: center;
+}
+
+#storecontroller ul li { display: inline; }
+
+#storecontroller ul li a
+{
+    text-decoration: none;
+    padding: .2em 1em;
+    color: #fff;
+    background-color: #036;
+}
+
+#storecontroller ul li a:hover
+{
+
+}

@@ -164,6 +164,7 @@
     <Compile Include="Configuration\FacebookApiKey.cs" />
     <Compile Include="Configuration\GoogleApiKey.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DownloadAppController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DAL\BikeRContext.cs" />
     <Compile Include="Models\NfcField.cs" />
@@ -203,6 +204,9 @@
     <None Include="Properties\PublishProfiles\bikerweb - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\BikeRWeb.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="Image\Download_on_the_App_Store_Badge_US-UK_135x40.svg" />
+    <Content Include="Image\en_app_rgb_wo_45.png" />
+    <Content Include="Image\WindowsStore_badge_en_English_Black_small_154x40.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
@@ -248,6 +252,7 @@
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\DownloadApp\Index.cshtml" />
     <None Include="Web.Azure-Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
