@@ -1,6 +1,6 @@
 ﻿using BikeR.WPApp.Common;
-
 using BikeR.WPApp.DataModel;
+using BikeR.WPApp.nfcReciever;
 using Microsoft.WindowsAzure.MobileServices;
 using System;
 using System.Collections.Generic;
@@ -26,7 +26,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace BikeR.WPApp
 {
-    public sealed partial class PivotPage : Page
+    public sealed partial class PivotPage : NfcTagRecieverPage
     {
         private const string FirstGroupName = "List of Tag";
         private const string SecondGroupName = "Builld your tag";
@@ -35,9 +35,8 @@ namespace BikeR.WPApp
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
         private readonly ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView("Resources");
 
-
-
         private IMobileServiceTable<NfcField> NfcTable = App.proxy.GetTable<NfcField>();
+
         #region DPs
 
 
@@ -111,6 +110,8 @@ namespace BikeR.WPApp
 
             btnDisconnect.IsEnabled = App.Credential != null;
 
+            
+            this.NfcRecievers();
         }
 
         /// <summary>

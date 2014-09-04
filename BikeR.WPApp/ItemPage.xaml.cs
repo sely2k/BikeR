@@ -1,5 +1,6 @@
 ﻿using BikeR.WPApp.Common;
 using BikeR.WPApp.DataModel;
+using BikeR.WPApp.nfcReciever;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,7 +25,7 @@ namespace BikeR.WPApp
     /// <summary>
     /// A page that displays details for a single item within a group.
     /// </summary>
-    public sealed partial class ItemPage : Page
+    public sealed partial class ItemPage : NfcTagRecieverPage
     {
         private readonly NavigationHelper navigationHelper;
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
@@ -37,6 +38,10 @@ namespace BikeR.WPApp
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+
+
+            this.NfcRecievers();
+            
         } 
 
         /// <summary>

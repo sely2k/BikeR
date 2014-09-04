@@ -1,5 +1,5 @@
 ﻿<base:NfcTagRecieverPage
-    xmlns:base="clr-namespace:BikeR.WPApp.nfcReciever"
+    xmlns:base="using:BikeR.WPApp.nfcReciever"
     x:Class="BikeR.WPApp.ItemPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
