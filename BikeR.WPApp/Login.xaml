@@ -1,5 +1,5 @@
-﻿<Page
-
+﻿<base:NfcTagRecieverPage
+    xmlns:base="clr-namespace:BikeR.WPApp.nfcReciever"
     x:Class="BikeR.WPApp.Login"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -183,4 +183,4 @@
 
         <!--</Grid>-->
     </Grid>
-</Page>
+</base:NfcTagRecieverPage>
