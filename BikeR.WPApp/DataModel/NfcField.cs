@@ -32,5 +32,17 @@ namespace BikeR.WPApp.DataModel
 
         [JsonProperty(PropertyName = "userid")]
         public string UserId { get; set; }
+
+
+        [JsonProperty(PropertyName = "lastlat")]
+        public string LastLat { get; set; }
+
+
+        [JsonProperty(PropertyName = "lastlon")]
+        public string LastLon { get; set; }
+
+
+        [JsonProperty(PropertyName = "lastaddress")]
+        public string LastAddress { get; set; }
     }
 }

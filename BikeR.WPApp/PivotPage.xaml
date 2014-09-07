@@ -45,7 +45,7 @@
             CommonNavigationTransitionInfo.IsStaggerElement="True">
             <!--Pivot item one-->
             <PivotItem
-                x:Uid="PivotItem1"
+ 
                 Margin="19,14.5,0,0"
                 Header="Tag List"
                 
@@ -89,7 +89,7 @@
 
             <!--Pivot item two-->
             <PivotItem
-                x:Uid="PivotItem2"
+
                 Margin="19,14.5,0,0"
                 Header="Build New Tag">
                 <!--Double line list no text wrapping-->
@@ -115,7 +115,8 @@
                         <Button 
                             x:Name="btnReadTag"
                             Content="Custom Api" 
-                            Tapped="ReadTag_Tapped" />                        
+                            Tapped="ReadTag_Tapped" 
+                            />                        
 
                     </StackPanel>
 

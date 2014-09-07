@@ -223,6 +223,32 @@ namespace BikeR.WPApp
 
         private async void ReadTag_Tapped(object sender, TappedRoutedEventArgs e)
         {
+
+
+            NfcFieldTagged nfcFieldTagged = new NfcFieldTagged()
+            {
+                NfcFieldId = "D23C0071-1CC9-415D-B63E-13936F0E7085",
+                Lat="3",
+                Lon ="11",
+                Address="ciao"
+            };
+            try
+            {
+
+                await App.proxy.GetTable<NfcFieldTagged>().InsertAsync(nfcFieldTagged);
+
+            }
+            catch (Exception ex)
+            {
+                var msr = ex.Message;
+            }
+
+            RefreshNfcItems();
+
+            return;
+
+
+
             string message;
             try
             {
@@ -244,7 +270,7 @@ namespace BikeR.WPApp
             {
                 message = ex.Message;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var s = ex.Message;
             }
@@ -307,6 +333,7 @@ namespace BikeR.WPApp
 
             Frame.Navigate(typeof(Login));
         }
+
     }
 
 
