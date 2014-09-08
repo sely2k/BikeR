@@ -96,6 +96,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -107,6 +112,8 @@
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="DataModel\NfcField.cs" />
     <Compile Include="DataModel\NfcFieldTagged.cs" />
+    <Compile Include="DataModel\NfCTagKind.cs" />
+    <Compile Include="DataModel\NfCTagStatus.cs" />
     <Compile Include="DataModel\valueconverter\TagStatusKindValueConverter.cs" />
     <Compile Include="ItemPage.xaml.cs">
       <DependentUpon>ItemPage.xaml</DependentUpon>

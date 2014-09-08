@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Media;
 
 namespace BikeR.WPApp.DataModel
 {
@@ -44,5 +45,47 @@ namespace BikeR.WPApp.DataModel
 
         [JsonProperty(PropertyName = "lastaddress")]
         public string LastAddress { get; set; }
+
+        public NfCTagKind TagKindEnum
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(TagKind))
+                    return NfCTagKind.UNDEFINED;
+                switch (TagKind.ToLowerInvariant())
+                {
+                    case "selfbuild":
+                        return NfCTagKind.SELFBUILD;
+                    case "buy":
+                        return NfCTagKind.BUY;
+                    default:
+                        return NfCTagKind.UNDEFINED;
+                }
+
+            }
+        }
+
+        public NfCTagStatus TagStatusEnum
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(TagStatus))
+                    return NfCTagStatus.STOLEN;
+                switch (TagStatus.ToLowerInvariant())
+                {
+                    case "active":
+                        return NfCTagStatus.ACTIVE;
+                    case "noactive":
+                        return NfCTagStatus.NOACTIVE;
+                    case "stolen":
+                        return NfCTagStatus.STOLEN;
+                    default:
+                        return NfCTagStatus.STOLEN;
+                }
+
+            }
+        }
+
+
     }
 }

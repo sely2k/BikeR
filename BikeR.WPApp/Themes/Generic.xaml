@@ -1,0 +1,108 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BikeR.WPApp.Themes">
+
+    <LinearGradientBrush 
+    		x:Key="linear_noactive_selfbuild" 
+    		StartPoint="0,0" 
+    		EndPoint="1,1" 
+    		SpreadMethod="Repeat">
+
+
+        <LinearGradientBrush.RelativeTransform>
+            <ScaleTransform ScaleX="0.1" ScaleY="0.1" />
+        </LinearGradientBrush.RelativeTransform>
+
+        <GradientStop Offset="0" Color="#FFED1B24" />
+        <GradientStop Offset="0.5" Color="#FFED1B24" />
+
+        <GradientStop Offset="0.5" Color="#FFAED137" />
+        <GradientStop Offset="1" Color="#FFAED137" />
+
+
+    </LinearGradientBrush>
+    <LinearGradientBrush 
+            x:Key="linear_active_selfbuild" 
+            StartPoint="0,0" 
+            EndPoint="1,1" 
+            SpreadMethod="Repeat">
+
+        <LinearGradientBrush.RelativeTransform>
+            <ScaleTransform ScaleX="0.1" ScaleY="0.1" />
+        </LinearGradientBrush.RelativeTransform>
+
+        <GradientStop Offset="0" Color="#FF00A650" />
+        <GradientStop Offset="0.5" Color="#FF00A650" />
+
+        <GradientStop Offset="0.5" Color="#FF6DC8BF" />
+        <GradientStop Offset="1" Color="#FF6DC8BF" />
+    </LinearGradientBrush>
+    <LinearGradientBrush 
+            x:Key="linear_stolen_selfbuild" 
+            StartPoint="0,0" 
+            EndPoint="1,1" 
+            SpreadMethod="Repeat">
+
+        <LinearGradientBrush.RelativeTransform>
+            <ScaleTransform ScaleX="0.1" ScaleY="0.1" />
+        </LinearGradientBrush.RelativeTransform>
+
+        <GradientStop Offset="0" Color="#FFF68C1F" />
+        <GradientStop Offset="0.5" Color="#FFF68C1F" />
+
+        <GradientStop Offset="0.5" Color="#FF6DC8BF" />
+        <GradientStop Offset="1" Color="#FF6DC8BF" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush 
+            x:Key="linear_noactive_Buy" 
+            StartPoint="0,0" 
+            EndPoint="1,1" 
+            SpreadMethod="Repeat">
+
+        <LinearGradientBrush.RelativeTransform>
+            <ScaleTransform ScaleX="0.1" ScaleY="0.1" />
+        </LinearGradientBrush.RelativeTransform>
+
+        <GradientStop Offset="0" Color="#FFED1B24" />
+        <GradientStop Offset="0.5" Color="#FFED1B24" />
+
+        <GradientStop Offset="0.5" Color="#FFAED137" />
+        <GradientStop Offset="1" Color="#FFAED137" />
+    </LinearGradientBrush>
+    <LinearGradientBrush 
+            x:Key="linear_active_Buy" 
+            StartPoint="0,0" 
+            EndPoint="1,1" 
+            SpreadMethod="Repeat">
+
+        <LinearGradientBrush.RelativeTransform>
+            <ScaleTransform ScaleX="0.1" ScaleY="0.1" />
+        </LinearGradientBrush.RelativeTransform>
+
+        <GradientStop Offset="0" Color="#FF00A650" />
+        <GradientStop Offset="0.5" Color="#FF00A650" />
+
+        <GradientStop Offset="0.5" Color="#FFAED137" />
+        <GradientStop Offset="1" Color="#FFAED137" />
+    </LinearGradientBrush>
+    <LinearGradientBrush 
+            x:Key="linear_stolen_Buy" 
+            StartPoint="0,0" 
+            EndPoint="1,1" 
+            SpreadMethod="Repeat">
+
+        <LinearGradientBrush.RelativeTransform>
+            <ScaleTransform ScaleX="0.1" ScaleY="0.1" />
+        </LinearGradientBrush.RelativeTransform>
+
+        <GradientStop Offset="0" Color="#FFF68C1F" />
+        <GradientStop Offset="0.5" Color="#FFF68C1F" />
+
+        <GradientStop Offset="0.5" Color="#FFAED137" />
+        <GradientStop Offset="1" Color="#FFAED137" />
+    </LinearGradientBrush>
+
+
+</ResourceDictionary>
