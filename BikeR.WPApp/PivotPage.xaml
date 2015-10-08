@@ -1,0 +1,155 @@
+﻿<base:NfcTagRecieverPage
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BikeR.WPApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:BikeR.WPApp.Data"
+    xmlns:base="using:BikeR.WPApp.nfcReciever"
+    xmlns:valueconverter="using:BikeR.WPApp.DataModel.valueconverter"
+    x:Class="BikeR.WPApp.PivotPage"
+    mc:Ignorable="d"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <base:NfcTagRecieverPage.Resources>
+
+        <valueconverter:TagStatusKindValueConverter 
+            x:Key="TagStatusKindValueConverter"/>
+
+
+    </base:NfcTagRecieverPage.Resources>
+
+    <base:NfcTagRecieverPage.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <CommonNavigationTransitionInfo IsStaggeringEnabled="True"/>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </base:NfcTagRecieverPage.Transitions>
+
+    <Grid>
+
+
+        <Pivot 
+			x:Uid="Pivot" 
+			Title="MY APPLICATION" 
+			x:Name="pivot" 
+			CommonNavigationTransitionInfo.IsStaggerElement="True">
+            <!--Pivot item one-->
+            <PivotItem
+ 
+				Margin="19,14.5,0,0"
+				Header="Tag List"
+                
+				CommonNavigationTransitionInfo.IsStaggerElement="True">
+                <!--Double line list with text wrapping-->
+                <ListView
+                    
+					x:Name="NfcListView"
+					ItemsSource="{Binding NfcItems}"
+					IsItemClickEnabled="True"
+					ItemClick="ItemView_ItemClick"
+					ContinuumNavigationTransitionInfo.ExitElementContainer="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid   Margin="0,0,0,9.5" Height="75">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Border 
+									Grid.Column="0" 
+                                     Background="{Binding Converter={StaticResource TagStatusKindValueConverter}}" 
+									/>
+                                <StackPanel
+									Grid.Column="1" >
+                                    <TextBlock
+										Text="{Binding FriendlyName}"
+										TextWrapping="Wrap"
+										Pivot.SlideInAnimationGroup="1"
+										CommonNavigationTransitionInfo.IsStaggerElement="True"
+										Margin="10,0,19,0" FontSize="24"/>
+                                    <TextBlock />
+
+                                </StackPanel>
+
+                            </Grid>
+
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </PivotItem>
+
+            <!--Pivot item two-->
+            <PivotItem
+
+				Margin="19,14.5,0,0"
+				Header="Build New Tag">
+                <!--Double line list no text wrapping-->
+
+
+                <StackPanel>
+                    <TextBlock Text="tag content" />
+                    <TextBox x:Name="nfcTagContent" Text=""/>
+
+                    <TextBlock Text="nome" />
+                    <TextBox x:Name="nfcFriendlyName" Text=""/>
+
+                    <TextBlock Text="note" />
+                    <TextBox x:Name="nfcNote" Text=""/>
+
+                    <StackPanel
+						Orientation="Horizontal" >
+                        <Button 
+							x:Name="btnBuildTag"
+							Content="build Nfc Tag" 
+							Tapped="BuildTag_Tapped" />
+
+                        <Button 
+							x:Name="btnReadTag"
+							Content="Custom Api" 
+							Tapped="ReadTag_Tapped" 
+                            />
+
+                    </StackPanel>
+
+
+
+                </StackPanel>
+            </PivotItem>
+
+            <!--Pivot item two-->
+            <PivotItem
+				Margin="19,14.5,0,0"
+				Header="Disconnect Account">
+
+                <StackPanel>
+                    <TextBlock Text="Disconnect Account" />
+
+
+                    <Button 
+						x:Name="btnDisconnect"
+						Content="Disconnect Account" Tapped="Disconnect_Tapped" HorizontalAlignment="Stretch" Margin="0" />
+
+
+
+
+                </StackPanel>
+            </PivotItem>
+
+        </Pivot>
+    </Grid>
+
+    <!--<Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton x:Uid="AddAppBarButton" x:Name="AddAppBarButton" Label="add" Icon="Add" Click="AddAppBarButton_Click" />
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Uid="SecondaryButton1" x:Name="SecondaryButton1" Label="secondary command 1" />
+                <AppBarButton x:Uid="SecondaryButton2" x:Name="SecondaryButton2" Label="secondary command 2" />
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>-->
+</base:NfcTagRecieverPage>

@@ -7,6 +7,7 @@ using Microsoft.Owin.Security.DataProtection;
 using Owin;
 using System;
 using BikeR.Web.Models;
+using BikeR.Web.Configuration;
 
 namespace BikeR.Web
 {
@@ -36,6 +37,15 @@ namespace BikeR.Web
             
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
+
+            AuthApiKeySection config =
+               (AuthApiKeySection)System.Configuration.ConfigurationManager.GetSection(
+               "AuthApiKeyGroup/AuthApiKey");
+
+
+            //http://www.asp.net/mvc/tutorials/mvc-5/create-an-aspnet-mvc-5-app-with-facebook-and-google-oauth2-and-openid-sign-on
+
+
             // Uncomment the following lines to enable logging in with third party login providers
             //app.UseMicrosoftAccountAuthentication(
             //    clientId: "",
@@ -44,12 +54,16 @@ namespace BikeR.Web
             //app.UseTwitterAuthentication(
             //   consumerKey: "",
             //   consumerSecret: "");
+            
+            app.UseFacebookAuthentication(
+               appId: config.FacebookApi.AppId,
+               appSecret: config.FacebookApi.AppSecret);
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
 
-            //app.UseGoogleAuthentication();
+
+            app.UseGoogleAuthentication(
+                 clientId: config.GoogleApi.ClientId,
+                 clientSecret: config.GoogleApi.ClientSecret);
         }
     }
 }
